@@ -7,32 +7,80 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        body { 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            min-height: 100vh; 
+            color: #212529;
+        }
         .container { max-width: 1200px; }
         .chat-container { 
             background: white; 
-            border-radius: 15px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 10px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #dee2e6;
             max-height: 70vh; 
             overflow-y: auto;
         }
-        .message { margin-bottom: 15px; padding: 12px 18px; border-radius: 12px; }
-        .user-message { background: #007bff; color: white; margin-left: 20%; }
-        .agent-message { background: #f8f9fa; border-left: 4px solid #28a745; }
-        .tool-call { background: #fff3cd; border-left: 4px solid #ffc107; font-family: monospace; }
-        .tool-result { background: #d1ecf1; border-left: 4px solid #17a2b8; }
+        .message { margin-bottom: 15px; padding: 12px 18px; border-radius: 8px; }
+        .user-message { 
+            background: #495057; 
+            color: white; 
+            margin-left: 20%; 
+            border-left: 4px solid #343a40;
+        }
+        .agent-message { 
+            background: #f8f9fa; 
+            border-left: 4px solid #6c757d; 
+            color: #212529;
+        }
+        .tool-call { 
+            background: #f1f3f4; 
+            border-left: 4px solid #868e96; 
+            font-family: monospace; 
+            color: #495057;
+        }
+        .tool-result { 
+            background: #ffffff; 
+            border-left: 4px solid #adb5bd; 
+            border: 1px solid #e9ecef;
+        }
         .loading { opacity: 0.7; }
         .tool-badge { font-size: 0.8em; margin-bottom: 5px; }
-        pre { max-height: 200px; overflow-y: auto; }
+        .tool-badge .badge { background-color: #6c757d !important; }
+        pre { 
+            max-height: 200px; 
+            overflow-y: auto; 
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            color: #495057;
+        }
         .model-info { font-size: 0.9em; color: #6c757d; }
+        .card-header { background-color: #495057 !important; }
+        .btn-primary { 
+            background-color: #495057; 
+            border-color: #495057;
+        }
+        .btn-primary:hover { 
+            background-color: #343a40; 
+            border-color: #343a40;
+        }
+        .text-white h1, .text-white p { color: #495057 !important; }
+        .card { 
+            border: 1px solid #dee2e6;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #6c757d;
+            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+        }
     </style>
 </head>
 <body>
     <div class="container py-4">
         <!-- Header -->
-        <div class="text-center mb-4 text-white">
-            <h1><i class="fas fa-robot"></i> LLM Agent POC</h1>
-            <p class="lead">Browser-Based Multi-Tool Reasoning Agent</p>
+        <div class="text-center mb-4">
+            <h1 style="color: #495057;"><i class="fas fa-robot"></i> LLM Agent POC</h1>
+            <p class="lead" style="color: #6c757d;">Browser-Based Multi-Tool Reasoning Agent</p>
         </div>
 
         <!-- Configuration Panel -->
@@ -68,7 +116,7 @@
 
         <!-- Chat Interface -->
         <div class="card chat-container mb-3">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header text-white">
                 <h5 class="mb-0"><i class="fas fa-comments"></i> Agent Conversation</h5>
             </div>
             <div class="card-body" id="chatMessages">
@@ -91,7 +139,7 @@
         </div>
 
         <!-- Footer -->
-        <div class="text-center mt-4 text-white">
+        <div class="text-center mt-4" style="color: #6c757d;">
             <small>Built with OpenAI Tool Calling • Google Search • AI Pipe • Code Execution</small>
         </div>
     </div>
