@@ -8,87 +8,134 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { 
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            background: #ffffff;
             min-height: 100vh; 
             color: #212529;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         .container { max-width: 1200px; }
+        .header-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #dee2e6;
+        }
         .chat-container { 
             background: white; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             border: 1px solid #dee2e6;
             max-height: 70vh; 
             overflow-y: auto;
         }
-        .message { margin-bottom: 15px; padding: 12px 18px; border-radius: 8px; }
+        .message { margin-bottom: 15px; padding: 15px 20px; border-radius: 8px; }
         .user-message { 
             background: #495057; 
             color: white; 
-            margin-left: 20%; 
-            border-left: 4px solid #343a40;
+            margin-left: 15%; 
+            margin-right: 0;
         }
         .agent-message { 
             background: #f8f9fa; 
-            border-left: 4px solid #6c757d; 
+            border: 1px solid #e9ecef;
             color: #212529;
         }
         .tool-call { 
             background: #f1f3f4; 
-            border-left: 4px solid #868e96; 
-            font-family: monospace; 
+            border: 1px solid #ced4da;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
             color: #495057;
+            font-size: 0.9em;
         }
         .tool-result { 
             background: #ffffff; 
-            border-left: 4px solid #adb5bd; 
-            border: 1px solid #e9ecef;
+            border: 1px solid #dee2e6;
+            color: #495057;
         }
         .loading { opacity: 0.7; }
-        .tool-badge { font-size: 0.8em; margin-bottom: 5px; }
-        .tool-badge .badge { background-color: #6c757d !important; }
+        .tool-badge { font-size: 0.8em; margin-bottom: 8px; }
+        .tool-badge .badge { 
+            background-color: #6c757d !important; 
+            color: white;
+        }
         pre { 
             max-height: 200px; 
             overflow-y: auto; 
             background: #f8f9fa;
             border: 1px solid #e9ecef;
             color: #495057;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
         }
         .model-info { font-size: 0.9em; color: #6c757d; }
-        .card-header { background-color: #495057 !important; }
+        .card-header { 
+            background-color: #495057 !important; 
+            border-bottom: 1px solid #dee2e6;
+        }
         .btn-primary { 
             background-color: #495057; 
             border-color: #495057;
+            font-weight: 500;
         }
-        .btn-primary:hover { 
+        .btn-primary:hover, .btn-primary:focus { 
             background-color: #343a40; 
             border-color: #343a40;
         }
-        .text-white h1, .text-white p { color: #495057 !important; }
         .card { 
             border: 1px solid #dee2e6;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-radius: 8px;
+        }
+        .form-control, .form-select {
+            border: 1px solid #ced4da;
         }
         .form-control:focus, .form-select:focus {
-            border-color: #6c757d;
-            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+            border-color: #495057;
+            box-shadow: 0 0 0 0.2rem rgba(73, 80, 87, 0.15);
+        }
+        .alert {
+            border: none;
+            border-radius: 6px;
+        }
+        .alert-info {
+            background-color: #e7f3ff;
+            color: #0c5460;
+            border-left: 4px solid #bee5eb;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #f5c6cb;
+        }
+        .footer-text {
+            color: #6c757d;
+            font-size: 0.9em;
+            padding: 1rem 0;
+            border-top: 1px solid #e9ecef;
+            margin-top: 2rem;
         }
     </style>
 </head>
 <body>
-    <div class="container py-4">
-        <!-- Header -->
-        <div class="text-center mb-4">
-            <h1 style="color: #495057;"><i class="fas fa-robot"></i> LLM Agent POC</h1>
-            <p class="lead" style="color: #6c757d;">Browser-Based Multi-Tool Reasoning Agent</p>
+    <div class="header-section">
+        <div class="container">
+            <div class="text-center">
+                <h1 style="color: #495057; font-weight: 600; margin-bottom: 0.5rem;">
+                    <i class="fas fa-robot me-2"></i>LLM Agent POC
+                </h1>
+                <p class="lead mb-0" style="color: #6c757d;">Browser-Based Multi-Tool Reasoning Agent</p>
+            </div>
         </div>
+    </div>
 
+    <div class="container">
         <!-- Configuration Panel -->
         <div class="card mb-4">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="form-label">LLM Provider</label>
+                        <label class="form-label fw-semibold">LLM Provider</label>
                         <select id="provider" class="form-select">
                             <option value="openai">OpenAI</option>
                             <option value="anthropic">Anthropic</option>
@@ -96,7 +143,7 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Model</label>
+                        <label class="form-label fw-semibold">Model</label>
                         <select id="model" class="form-select">
                             <option value="gpt-4">GPT-4</option>
                             <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
@@ -104,7 +151,7 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">API Key</label>
+                        <label class="form-label fw-semibold">API Key</label>
                         <input type="password" id="apiKey" class="form-control" placeholder="Enter your API key">
                     </div>
                 </div>
@@ -117,29 +164,32 @@
         <!-- Chat Interface -->
         <div class="card chat-container mb-3">
             <div class="card-header text-white">
-                <h5 class="mb-0"><i class="fas fa-comments"></i> Agent Conversation</h5>
+                <h5 class="mb-0 fw-semibold"><i class="fas fa-comments me-2"></i>Agent Conversation</h5>
             </div>
             <div class="card-body" id="chatMessages">
                 <div class="message agent-message">
-                    <strong>Agent:</strong> Hello! I'm your LLM agent. I can search the web, execute code, and use AI workflows. What would you like me to help you with?
+                    <strong style="color: #495057;"><i class="fas fa-robot me-2"></i>Agent:</strong> 
+                    Hello! I'm your LLM agent. I can search the web, execute code, and use AI workflows. What would you like me to help you with?
                 </div>
             </div>
         </div>
 
         <!-- Input Area -->
-        <div class="card">
+        <div class="card mb-4">
             <div class="card-body">
                 <div class="input-group">
                     <input type="text" id="userInput" class="form-control" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
-                    <button class="btn btn-primary" onclick="sendMessage()">
-                        <i class="fas fa-paper-plane"></i> Send
+                    <button class="btn btn-primary px-4" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane me-2"></i>Send
                     </button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Footer -->
-        <div class="text-center mt-4" style="color: #6c757d;">
+    <!-- Footer -->
+    <div class="footer-text text-center">
+        <div class="container">
             <small>Built with OpenAI Tool Calling • Google Search • AI Pipe • Code Execution</small>
         </div>
     </div>
@@ -212,9 +262,11 @@ Always be conversational and explain what you're doing. Use tools when they woul
             const alertContainer = document.getElementById('alertContainer');
             const alertId = 'alert-' + Date.now();
             
+            const icon = type === 'danger' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+            
             alertContainer.innerHTML = `
                 <div class="alert alert-${type} alert-dismissible fade show" id="${alertId}">
-                    <i class="fas fa-exclamation-triangle"></i> ${message}
+                    <i class="fas ${icon} me-2"></i>${message}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>`;
             
@@ -235,19 +287,19 @@ Always be conversational and explain what you're doing. Use tools when they woul
             
             if (role === 'user') {
                 className += 'user-message';
-                icon = '<i class="fas fa-user"></i>';
+                icon = '<i class="fas fa-user me-2"></i>';
                 prefix = 'You:';
             } else if (role === 'assistant') {
                 className += 'agent-message';
-                icon = '<i class="fas fa-robot"></i>';
+                icon = '<i class="fas fa-robot me-2"></i>';
                 prefix = 'Agent:';
             } else if (isToolCall) {
                 className += 'tool-call';
-                icon = '<i class="fas fa-cog"></i>';
+                icon = '<i class="fas fa-cog me-2"></i>';
                 prefix = `Tool Call (${toolName}):`;
             } else {
                 className += 'tool-result';
-                icon = '<i class="fas fa-check-circle"></i>';
+                icon = '<i class="fas fa-check-circle me-2"></i>';
                 prefix = `Tool Result (${toolName}):`;
             }
             
@@ -256,12 +308,13 @@ Always be conversational and explain what you're doing. Use tools when they woul
             if (isToolCall && toolName) {
                 messageDiv.innerHTML = `
                     <div class="tool-badge">
-                        <span class="badge bg-warning">${toolName}</span>
+                        <span class="badge">${toolName}</span>
                     </div>
-                    ${icon} <strong>${prefix}</strong><br>
+                    ${icon}<strong>${prefix}</strong><br>
                     <pre>${content}</pre>`;
             } else {
-                messageDiv.innerHTML = `${icon} <strong>${prefix}</strong> ${content}`;
+                const textColor = role === 'assistant' ? 'style="color: #495057;"' : '';
+                messageDiv.innerHTML = `${icon}<strong ${textColor}>${prefix}</strong> ${content}`;
             }
             
             chatMessages.appendChild(messageDiv);
@@ -281,13 +334,6 @@ Always be conversational and explain what you're doing. Use tools when they woul
             const message = userInput.value.trim();
             
             if (!message) return;
-            
-            // Validate API key
-            const apiKey = document.getElementById('apiKey').value;
-            if (!apiKey) {
-                showAlert('Please enter your API key to continue.');
-                return;
-            }
             
             isProcessing = true;
             userInput.value = '';
@@ -372,9 +418,10 @@ Always be conversational and explain what you're doing. Use tools when they woul
             await new Promise(resolve => setTimeout(resolve, 1000));
             
             const lastMessage = request.messages[request.messages.length - 1];
+            const content = lastMessage.content.toLowerCase();
             
-            // Simple pattern matching for demo
-            if (lastMessage.content.toLowerCase().includes('search')) {
+            // Enhanced pattern matching for demo
+            if (content.includes('search') || content.includes('find') || content.includes('look up')) {
                 return {
                     content: "I'll search for that information.",
                     tool_calls: [{
@@ -383,28 +430,43 @@ Always be conversational and explain what you're doing. Use tools when they woul
                         function: {
                             name: "google_search",
                             arguments: JSON.stringify({
-                                query: lastMessage.content.replace(/search|for|about/gi, '').trim()
+                                query: lastMessage.content.replace(/search|for|about|find|look up/gi, '').trim()
                             })
                         }
                     }]
                 };
-            } else if (lastMessage.content.toLowerCase().includes('code') || lastMessage.content.toLowerCase().includes('calculate')) {
+            } else if (content.includes('code') || content.includes('calculate') || content.includes('+') || content.includes('-') || content.includes('*') || content.includes('/')) {
                 return {
-                    content: "I'll execute some code to help with that.",
+                    content: "I'll execute some code to help with that calculation.",
                     tool_calls: [{
                         id: "call_" + Date.now(),
                         type: "function",
                         function: {
                             name: "execute_code",
                             arguments: JSON.stringify({
-                                code: "console.log('Hello from executed code!'); return new Date().toLocaleString();"
+                                code: `// Calculation: ${lastMessage.content}\nconst result = ${lastMessage.content.includes('+') ? lastMessage.content : '2 + 2'};\nconsole.log('Result:', result);\nreturn result;`
+                            })
+                        }
+                    }]
+                };
+            } else if (content.includes('workflow') || content.includes('ai pipe')) {
+                return {
+                    content: "I'll use an AI workflow to process that.",
+                    tool_calls: [{
+                        id: "call_" + Date.now(),
+                        type: "function",
+                        function: {
+                            name: "ai_pipe",
+                            arguments: JSON.stringify({
+                                workflow: "text-analysis",
+                                data: lastMessage.content
                             })
                         }
                     }]
                 };
             } else {
                 return {
-                    content: "I understand! How can I help you further? I can search for information, execute code, or use AI workflows.",
+                    content: "I understand! How can I help you further? I can search for information, execute code, or use AI workflows. Try asking me to 'search for something', 'calculate 3+3', or 'run a workflow'.",
                     tool_calls: null
                 };
             }
@@ -540,7 +602,7 @@ Always be conversational and explain what you're doing. Use tools when they woul
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            showAlert('Demo mode: Replace API simulation with real integrations for production use.', 'info');
+            showAlert('Demo mode active. Try typing "calculate 3+3" or "search for AI" to see the tools in action!', 'info');
         });
     </script>
 </body>
