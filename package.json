@@ -1,1 +1,92 @@
-
+{
+  "name": "llm-agent-poc",
+  "version": "1.0.0",
+  "description": "Browser-based LLM Agent with Multi-Tool Reasoning - A proof-of-concept demonstrating LLM-powered agents that can combine text generation with external tools like web search, AI workflows, and code execution",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "live-server .",
+    "dev": "live-server --port=3000 --open=index.html",
+    "build": "echo 'No build process needed for static HTML' && exit 0",
+    "test": "echo 'Run tests with your preferred testing framework'",
+    "deploy": "gh-pages -d .",
+    "lint": "eslint *.js",
+    "format": "prettier --write *.html *.js *.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/llm-agent-poc.git"
+  },
+  "keywords": [
+    "llm",
+    "agent",
+    "ai",
+    "chatbot",
+    "openai",
+    "tool-calling",
+    "browser",
+    "javascript",
+    "google-search",
+    "code-execution",
+    "proof-of-concept",
+    "multi-tool",
+    "reasoning",
+    "conversational-ai"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com",
+    "url": "https://github.com/yourusername"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/llm-agent-poc/issues"
+  },
+  "homepage": "https://yourusername.github.io/llm-agent-poc",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "gh-pages": "^6.0.0",
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3"
+  },
+  "optionalDependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express-rate-limit": "^7.1.4"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "config": {
+    "port": 3000,
+    "host": "localhost"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/yourusername"
+  },
+  "contributors": [
+    {
+      "name": "Your Name",
+      "email": "your.email@example.com",
+      "url": "https://github.com/yourusername"
+    }
+  ],
+  "files": [
+    "index.html",
+    "README.md",
+    "LICENSE",
+    "docs/"
+  ],
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  }
+}
